@@ -6,5 +6,10 @@
 #   include lsst_system_authnz
 class lsst_system_authnz {
 
+  include ::lsst_system_authnz::access
+  include ::lsst_system_authnz::kerberos
+  include ::lsst_system_authnz::sshd
+  include ::lsst_system_authnz::sssd
+  include ::sudo   # saz::sudo
 
 }
