@@ -1,0 +1,27 @@
+---
+lsst_system_authnz::access::required_pkgs:
+  - pam
+  - pam_krb5
+
+lsst_system_authnz::kerberos::required_pkgs:
+  - krb5-libs
+  - krb5-workstation
+  - pam_krb5
+
+lsst_system_authnz::sshd::required_packages:
+  - openssh-server
+lsst_system_authnz::sshd::revoked_keys_file: /etc/ssh/revoked_keys
+lsst_system_authnz::sshd::config:
+  UsePAM: 'yes'
+
+lsst_system_authnz::sssd::debug_level_domain: 0
+lsst_system_authnz::sssd::debug_level_nss: 0
+lsst_system_authnz::sssd::debug_level_pam: 0
+lsst_system_authnz::sssd::debug_level_sssd: 0
+lsst_system_authnz::sssd::enablemkhomedir: true
+lsst_system_authnz::sssd::enumerate: 'false'
+lsst_system_authnz::sssd::ldap_backup_uri: []
+lsst_system_authnz::sssd::ldap_tls_cacert: '/etc/pki/ca-trust/source/anchors/incommon-ca.pem'
+lsst_system_authnz::sssd::shell_fallback: '/bin/bash'
+lsst_system_authnz::sssd::timeout: 60
+

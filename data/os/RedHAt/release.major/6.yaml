@@ -1,0 +1,35 @@
+---
+lsst_system_authnz::sshd::config:
+  AddressFamily: inet
+  AllowTcpForwarding: no
+  ChallengeResponseAuthentication: no
+  Ciphers:
+    - aes256-ctr
+    - aes192-ctr
+    - aes128-ctr
+  GatewayPorts: no
+  GSSAPIAuthentication: no
+  GSSAPICleanupCredentials: no
+  GSSAPIKexAlgorithms:
+    - gss-group14-sha1-
+  HostbasedAuthentication: no
+  HostKey:
+    - /etc/ssh/ssh_host_rsa_key
+  KbdInteractiveAuthentication: no
+  KerberosAuthentication: no
+  KexAlgorithms:
+    - diffie-hellman-group-exchange-sha256
+  LogLevel: VERBOSE
+  MACs:
+    - hmac-sha2-512
+    - hmac-sha2-256
+  PasswordAuthentication: no
+  PermitRootLogin: no
+  PermitTunnel: no
+  Protocol: 2
+  PubkeyAuthentication: no
+  RhostsRSAAuthentication: no
+  RSAAuthentication: no
+  SyslogFacility: AUTH
+  X11Forwarding: no
+

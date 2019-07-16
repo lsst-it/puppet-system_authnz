@@ -1,1 +1,107 @@
 ---
+lookup_options:
+  lsst_system_authnz::access::allow_users:
+    merge: hash
+  lsst_system_authnz::access::deny_users:
+    merge: hash
+  lsst_system_authnz::access::allow_services:
+    merge: hash
+  lsst_system_authnz::access::deny_services:
+    merge: hash
+  lsst_system_authnz::access::allow_root:
+    merge: hash
+  lsst_system_authnz::access::deny_root:
+    merge: hash
+  lsst_system_authnz::access::pam_config:
+    merge: hash
+  lsst_system_authnz::kerberos::cfg_file_settings:
+    merge: hash
+  lsst_system_authnz::sshd::allowed_subnets:
+    merge: deep
+  lsst_system_authnz::sshd::config:
+    merge: hash
+  lsst_system_authnz::sshd::config_matches:
+    merge:
+      strategy: deep
+      knockout_prefix: '-'
+  lsst_system_authnz::sshd::revoked_keys:
+    merge: deep
+  lsst_system_authnz::sssd::allowed_shells:
+    merge: unique
+  lsst_system_authnz::sssd::filter_groups:
+    merge: unique
+  lsst_system_authnz::sssd::filter_users:
+    merge: unique
+  lsst_system_authnz::sssd::simple_allow_groups:
+    merge: unique
+  lsst_system_authnz::sssd::simple_allow_users:
+    merge: unique
+  lsst_system_authnz::sssd::simple_deny_groups:
+    merge: unique
+  lsst_system_authnz::sssd::vetoed_shells:
+    merge: unique
+
+lsst_system_authnz::access::allow_users: {}
+lsst_system_authnz::access::deny_users: {}
+lsst_system_authnz::access::allow_services: {}
+lsst_system_authnz::access::deny_services: {}
+lsst_system_authnz::access::allow_root: {}
+lsst_system_authnz::access::deny_root: {}
+lsst_system_authnz::access::pam_config: {}
+
+lsst_system_authnz::kerberos::cfg_file_settings:
+  /etc/krb5.conf: |
+    # This file is managed by Puppet.
+    includedir /etc/krb5.conf.d/
+  /etc/krb5.conf.d/appdefaults.conf: |
+    # This file is managed by Puppet.
+    [appdefaults]
+      forward = 1
+      forwardable = 1
+      krb5_run_aklog = 1
+      krb5_aklog_path = /usr/local/krb5/bin/aklog
+      default_lifetime = 25h
+      telnet = {
+        autologin = 1
+      }
+      xdm = {
+        retain_ccache = 1
+        afs_retain_token = 1
+      }
+      pam = {
+        ticket_lifetime = 90000
+        renew_lifetime = 90000
+        forwardable = true
+      }
+  /etc/krb5.conf.d/domain_realm.conf: |
+    # This file is managed by Puppet.
+  /etc/krb5.conf.d/kdc.conf: |
+    # This file is managed by Puppet.
+    [kdc]
+      profile = /etc/kdc.conf
+      afs_salt = EXAMPLE.COM
+  /etc/krb5.conf.d/libdefaults.conf: |
+    # This file is managed by Puppet.
+    [libdefaults]
+      default_ccache_name = KEYRING:persistent:%{literal('%')}{uid}
+      default_realm = EXAMPLE.COM
+      forwardable = true
+      noaddresses = false
+  /etc/krb5.conf.d/logging.conf: |
+    # This file is managed by Puppet.
+    [logging]
+      default = SYSLOG:INFO:LOCAL6
+  /etc/krb5.conf.d/realms.conf: |
+    # This file is managed by Puppet.
+    [realms]
+      EXAMPLE.COM = {
+        kdc = kerberos.example.com:88
+        kdc = kerberos-1.example.com:88
+        kdc = kerberos-2.example.com:88
+        admin_server = kadmin.example.com:749
+        default_domain = example.com
+      }
+
+lsst_system_authnz::sshd::allowed_subnets: []
+lsst_system_authnz::sshd::config_matches: {}
+lsst_system_authnz::sshd::revoked_keys: []

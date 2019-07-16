@@ -26,11 +26,9 @@ For more information about LSST IdM (Identity Managment), see:
 
 The `lsst_system_authnz` module affects the following services on a given server:
 
-  * kerberos configuration
-  * kerberos host keytab
+  * kerberos configuration & host keytab
   * SSSD configuration
   * sshd configuration
-  * firewall restrictions for sshd
   * PAM security access.conf configuration
   * sudoers configuration
 
@@ -40,6 +38,41 @@ The following parameters must be defined:
 
   * `lsst_system_authnz::...` - ...
 
+The sudo fuctionality requires hiera to specify something like the following:
+```
+# Set custom content for sudoers file
+sudo::content: 'stdcfg/sudoers.erb'
+
+# Additional sudoers config settings to be included from sudoers.d
+sudo::configs:
+  defaults:
+    priority: 0
+    content:
+      - 'Defaults   !visiblepw'
+      - 'Defaults    always_set_home'
+      - 'Defaults    env_reset'
+      - 'Defaults    env_keep =  "COLORS DISPLAY HOSTNAME HISTSIZE KDEDIR LS_COLORS"'
+      - 'Defaults    env_keep += "MAIL PS1 PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE"'
+      - 'Defaults    env_keep += "LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES"'
+      - 'Defaults    env_keep += "LC_MONETARY LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE"'
+      - 'Defaults    env_keep += "LC_TIME LC_ALL LANGUAGE LINGUAS _XKB_CHARSET XAUTHORITY"'
+      - 'Defaults    match_group_by_gid'
+      - 'Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin'
+      - 'root ALL=(ALL)   ALL'
+      - '%wheel   ALL=(ALL)   ALL'
+  common_lsst_admins:
+    priority: 10
+    content:
+      - '%lsst_sysadm ALL=(ALL) NOPASSWD: ALL'
+  common_disabled_users:
+    priority: 99
+    content:
+      - '#deny former NCSA users'
+      - '%all_disabled_usr ALL=(ALL) !ALL'
+      - '#deny users in lsst_disabled LDAP group'                                                                          
+      - '%lsst_disabled ALL=(ALL) !ALL'                                                                                    
+```
+
 This module requires the following puppet modules to be installed:
 
   * https://forge.puppet.com/herculesteam/augeasproviders
@@ -48,6 +81,8 @@ This module requires the following puppet modules to be installed:
   * https://forge.puppet.com/puppetlabs/firewall
   * https://forge.puppet.com/puppetlabs/inifile
   * https://forge.puppet.com/puppetlabs/stdlib
+  * https://forge.puppet.com/saz/sudo
+  * https://forge.puppet.com/walkamongus/sssd
 
 ### Beginning with lsst_system_authnz
 

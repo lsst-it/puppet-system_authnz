@@ -1,0 +1,34 @@
+<%- | Hash $allow_users,
+      Hash $deny_users,
+      Hash $allow_services,
+      Hash $deny_services,
+      Hash $allow_root,
+      Hash $deny_root,
+    | -%>
+### ALLOW ROOT
+<% each($allow_root) |$key, $val| { -%>
+<%= sprintf( '+ : %s : %s', $key, $val ) %>
+<% } -%>
+### DENY ROOT
+<% each($deny_root) |$key, $val| { -%>
+<%= sprintf( '- : %s : %s', $key, $val ) %>
+<% } -%>
+### DENY USERS
+<% each($deny_users) |$key, $val| { -%>
+<%= sprintf( '- : %s : %s', $key, $val ) %>
+<% } -%>
+### AllOW USERS
+<% each($allow_users) |$key, $val| { -%>
+<%= sprintf( '+ : %s : %s', $key, $val ) %>
+<% } -%>
+### ALLOW SERVICES
+<% each($allow_services) |$key, $val| { -%>
+<%= sprintf( '+ : %s : %s', $key, $val ) %>
+<% } -%>
+### DENY SERVICES
+<% each($deny_services) |$key, $val| { -%>
+<%= sprintf( '- : %s : %s', $key, $val ) %>
+<% } -%>
+### DEFAULT DENY
+- : ALL : ALL
+
