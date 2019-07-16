@@ -41,7 +41,7 @@ The following parameters must be defined:
 The sudo fuctionality requires hiera to specify something like the following:
 ```
 # Set custom content for sudoers file
-sudo::content: 'stdcfg/sudoers.erb'
+sudo::content: 'lsst_system_authnz/sudoers.erb'
 
 # Additional sudoers config settings to be included from sudoers.d
 sudo::configs:
