@@ -34,9 +34,11 @@ The `lsst_system_authnz` module affects the following services on a given server
 
 ### Setup Requirements
 
-The following parameters must be defined:
+The following parameters must (or should) be defined:
 
-  * `lsst_system_authnz::...` - ...
+  * `lsst_system_authnz::kerberos::createhostkeytab` - String of BASE64 encoded keytab file used for creating kerberos host keys
+  * `lsst_system_authnz::kerberos::createhostuser` - String of kerberos user used for creating kerberos host keys
+  * `lsst_system_authnz::sssd::simple_allow_groups` - Array of group names that are allowed access through SSSD
 
 The sudo fuctionality requires hiera to specify something like the following:
 ```
@@ -94,7 +96,45 @@ To use load the lsst_system_authnz puppet module, declare this class in your man
 
 The following parameters let you extend lsst_system_authnz options beyond the default:
 
-  * `lsst_system_authnz::...::...` - String of CIDR address notation for ... firewall rules
+  * `lsst_system_authnz::access::allow_root` - Hash of allowed root user/group names and their respective permissions
+  * `lsst_system_authnz::access::allow_services` - Hash of allowed service user/group names and their respective permissions
+  * `lsst_system_authnz::access::allow_users` - Hash of allowed user/group names and their respective permissions
+  * `lsst_system_authnz::access::deny_root` - Hash of denied root user/group names and their respective permissions
+  * `lsst_system_authnz::access::deny_services` - Hash of denied service user/group names and their respective permissions
+  * `lsst_system_authnz::access::deny_users` - Hash of denied user/group names and their respective permissions
+  * `lsst_system_authnz::access::pam_config` - Hash of pam configuration
+  * `lsst_system_authnz::kerberos::cfg_file_settings` - Hash of kerberos file settings
+  * `lsst_system_authnz::kerberos::required_pkgs` - Array of packages needed for kerberos configuration
+  * `lsst_system_authnz::sshd::allowed_subnets` - Array of allowed subnets for default sshd configuration
+  * `lsst_system_authnz::sshd::config` - Hash of default sshd configuration settingsa
+  * `lsst_system_authnz::sshd::config_matches` - Hash of sshd config matches
+  * `lsst_system_authnz::sshd::required_packages` - Array of packages needed for sshd configuration
+  * `lsst_system_authnz::sshd::revoked_keys` - Array of public ssh keys that are revoked by sshd
+  * `lsst_system_authnz::sshd::revoked_keys_file` - String of full path to file containing revoked ssh keys
+  * `lsst_system_authnz::sssd::allowed_shells` - Array of shell binaries with full path
+  * `lsst_system_authnz::sssd::debug_level_domain` - Integer of debug level for domain in SSSD
+  * `lsst_system_authnz::sssd::debug_level_nss` - Integer of debug level for nss in SSSD
+  * `lsst_system_authnz::sssd::debug_level_pam` - Integer of debug level for pam in SSSD
+  * `lsst_system_authnz::sssd::debug_level_sssd` - Integer of debug level for SSSD
+  * `lsst_system_authnz::sssd::enablemkhomedir` - Boolean of whether or not to enable mkhomedir
+  * `lsst_system_authnz::sssd::enumerate` - String of enumerate setting in SSSD
+  * `lsst_system_authnz::sssd::filter_groups` - Array of group names to not come from LDAP
+  * `lsst_system_authnz::sssd::filter_users` - Array of user names to not come from LDAP (e.g. local users)
+  * `lsst_system_authnz::sssd::krb5_realm` - String for kerberos realm
+  * `lsst_system_authnz::sssd::ldap_domain` - String for ldap domain name
+  * `lsst_system_authnz::sssd::ldap_group_search_base` - String of LDAP group search base
+  * `lsst_system_authnz::sssd::ldap_search_base` - String of ldap search base
+  * `lsst_system_authnz::sssd::ldap_tls_cacert` - String of content of LDAP TLS CA certificate
+  * `lsst_system_authnz::sssd::ldap_user_search_base` - String of ldap user search base
+  * `lsst_system_authnz::sssd::ldap_uri` - Array of ldap server URIs
+  * `lsst_system_authnz::sssd::ldap_backup_uri` - Array of backup ldap server URIs
+  * `lsst_system_authnz::sssd::override_homedir` - String of override path for user home directories
+  * `lsst_system_authnz::sssd::shell_fallback` - String of fallback shell binary with full path
+  * `lsst_system_authnz::sssd::simple_deny_groups` - Array of group names that are denied access through SSSD
+  * `lsst_system_authnz::sssd::simple_allow_users` - Array of user names are allowed access through SSSD
+  * `lsst_system_authnz::sssd::timeout` - Integer of timeout setting in SSSD
+  * `lsst_system_authnz::sssd::vetoed_shells` - Array of unallowed shell binaries with full path
+
 
 ## Limitations
 
