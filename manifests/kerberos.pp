@@ -45,6 +45,16 @@ class lsst_system_authnz::kerberos (
         mode   => '0700',
         source => 'puppet:///modules/lsst_system_authnz/root/createhostkeytab.sh',
     }
+    file { '/root/deleteserviceprincipals.sh':
+        ensure => present,
+        mode   => '0700',
+        source => 'puppet:///modules/lsst_system_authnz/root/deleteserviceprincipals.sh',
+    }
+    file { '/root/deletehostprincipal.sh':
+        ensure => present,
+        mode   => '0700',
+        source => 'puppet:///modules/lsst_system_authnz/root/deletehostprincipal.sh',
+    }
 
     ## THIS MIGHT NEED TO BE SMARTER TO ALLOW FOR MULTIPLE HOSTNAMES ON ONE SERVER
     exec { 'create_host_keytab':
