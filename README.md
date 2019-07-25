@@ -39,6 +39,8 @@ The following parameters must (or should) be defined:
   * `lsst_system_authnz::kerberos::createhostuser` - String of kerberos user used for creating kerberos host keys
   * `lsst_system_authnz::sssd::simple_allow_groups` - Array of group names that are allowed access through SSSD
 
+The `createhostuser` and cooresponding `createhostkeytab` parameters are unique for each LSST site and datacenter. Datacenter admins should contact <kerberos@ncsa.illinois.edu> to inquire about these values for their site.
+
 The sudo fuctionality requires hiera to specify something like the following:
 ```
 # Set custom content for sudoers file
