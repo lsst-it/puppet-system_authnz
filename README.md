@@ -138,12 +138,12 @@ The following parameters let you extend lsst_system_authnz options beyond the de
 
 Note that if you change, rebuild, or shutdown a server, the HOST principal for the old host remains in the Kerberos database. Besides cluttering up the Kerberos database, these old HOST principal entries will prevent a rebuilt server with the same hostname for setting up a fresh HOST principal that is necessary for system authentication.
 
-You can clean up the existing HOST principal **before** the server is rebuilt or deleted:
+You should clean up the existing HOST principal **before** the server is rebuilt or deleted:
 
 1. Optional: If the hostname is not intended to be reused, first clean up any service principals associated with the hostname: `/root/deleteserviceprincipals.sh`
 2. Then clean up the host principal: `/root/deletehostprincipal.sh`
 
-If you forget to clean up the existing HOST principal and can't run the above scripts, send email to <somebbob@example.com> requesting the principal(s) to be deleted from the Kerberos database. Be sure to mention the hostname(s) that need to be cleaned up.
+If you forget to clean up the existing HOST principal and can't run the above scripts, send email to <kerberos@ncsa.illinois.edu> requesting the principal(s) to be deleted from the Kerberos database. Be sure to mention the hostname(s) that need to be cleaned up.
 
 ## Limitations
 
