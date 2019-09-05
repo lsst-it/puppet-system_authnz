@@ -1,53 +1,57 @@
 ---
 lookup_options:
-  lsst_system_authnz::access::allow_users:
-    merge: hash
-  lsst_system_authnz::access::deny_users:
-    merge: hash
-  lsst_system_authnz::access::allow_services:
-    merge: hash
-  lsst_system_authnz::access::deny_services:
-    merge: hash
-  lsst_system_authnz::access::allow_root:
-    merge: hash
-  lsst_system_authnz::access::deny_root:
-    merge: hash
-  lsst_system_authnz::access::pam_config:
-    merge: hash
-  lsst_system_authnz::kerberos::cfg_file_settings:
-    merge: hash
-  lsst_system_authnz::sshd::allowed_subnets:
-    merge: deep
-  lsst_system_authnz::sshd::config:
-    merge: hash
-  lsst_system_authnz::sshd::config_matches:
-    merge:
-      strategy: deep
-      knockout_prefix: '-'
-  lsst_system_authnz::sshd::revoked_keys:
-    merge: deep
-  lsst_system_authnz::sssd::allowed_shells:
-    merge: unique
-  lsst_system_authnz::sssd::filter_groups:
-    merge: unique
-  lsst_system_authnz::sssd::filter_users:
-    merge: unique
-  lsst_system_authnz::sssd::simple_allow_groups:
-    merge: unique
-  lsst_system_authnz::sssd::simple_allow_users:
-    merge: unique
-  lsst_system_authnz::sssd::simple_deny_groups:
-    merge: unique
-  lsst_system_authnz::sssd::vetoed_shells:
-    merge: unique
+    lsst_system_authnz::access::access_allow:
+        merge: hash
+    lsst_system_authnz::access::access_deny:
+        merge: hash
+    lsst_system_authnz::access::access_deny_before:
+        merge: hash
+    lsst_system_authnz::access::pam_config:
+        merge: hash
+    lsst_system_authnz::kerberos::cfg_file_settings:
+        merge: hash
+    lsst_system_authnz::sssd::allowed_shells:
+        merge: unique
+    lsst_system_authnz::sssd::filter_groups:
+        merge: unique
+    lsst_system_authnz::sssd::filter_users:
+        merge: unique
+    lsst_system_authnz::sssd::simple_allow_groups:
+        merge: unique
+    lsst_system_authnz::sssd::simple_allow_users:
+        merge: unique
+    lsst_system_authnz::sssd::simple_deny_groups:
+        merge: unique
+    lsst_system_authnz::sssd::vetoed_shells:
+        merge: unique
 
-lsst_system_authnz::access::allow_users: {}
-lsst_system_authnz::access::deny_users: {}
-lsst_system_authnz::access::allow_services: {}
-lsst_system_authnz::access::deny_services: {}
-lsst_system_authnz::access::allow_root: {}
-lsst_system_authnz::access::deny_root: {}
-lsst_system_authnz::access::pam_config: {}
+lsst_system_authnz::access::access_allow:
+    'Allow root from cron':
+        user: root
+        origin: cron
+    'Allow root from crond':
+        user: root
+        origin: crond
+    'Allow root from localhost':
+        user: root
+        origin: 127.0.0.1
+    'Allow root from :0':
+        user: root
+        origin: ':0'
+    'Allow root from tty':
+        user: root
+        origin: tty
+lsst_system_authnz::access::access_deny: {}
+lsst_system_authnz::access::access_deny_before: {}
+lsst_system_authnz::access::pam_config:
+    'Enforce access.conf in sshd':
+        ensure: present
+        service: sshd
+        type: account
+        control: required
+        module: pam_access.so
+        position: before module pam_nologin.so
+
 
 lsst_system_authnz::kerberos::cfg_file_settings:
   /etc/krb5.conf: |
@@ -101,7 +105,3 @@ lsst_system_authnz::kerberos::cfg_file_settings:
         admin_server = kadmin.example.com:749
         default_domain = example.com
       }
-
-lsst_system_authnz::sshd::allowed_subnets: []
-lsst_system_authnz::sshd::config_matches: {}
-lsst_system_authnz::sshd::revoked_keys: []

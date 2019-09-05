@@ -6,40 +6,51 @@
 #   include lsst_system_authnz::access
 class lsst_system_authnz::access (
     Array[ String[1] ] $required_pkgs,
-    Hash $allow_users,
-    Hash $deny_users,
-    Hash $allow_services,
-    Hash $deny_services,
-    Hash $allow_root,
-    Hash $deny_root,
+    Hash $access_allow,
+    Hash $access_deny,
+    Hash $access_deny_before,
     Hash $pam_config,
 ) {
 
-    # Make sure pam is installed.
+    ### Make sure pam is installed
     ensure_packages( $required_pkgs )
 
-    file { '/etc/security/access.conf':
-        ensure  => 'file',
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0644',
-        content => epp( 'lsst_system_authnz/access.conf.epp', {
-            'allow_users'    => $allow_users,
-            'deny_users'     => $deny_users,
-            'allow_services' => $allow_services,
-            'deny_services'  => $deny_services,
-            'allow_root'     => $allow_root,
-            'deny_root'      => $deny_root,
-            }
-        ),
+    ### Configure access.conf
+
+    pam_access::entry { 'Default Allow':
+        user       => 'root',
+        origin     => 'LOCAL',
+        permission => '+',
+        position   => 'before',
     }
 
-    #Configure pam
-    each($pam_config) |String[1] $key, Hash $value| {
-        pam { $key:
-            * => $value,
-        }
+    pam_access::entry { 'Default Deny':
+        user       => 'ALL',
+        origin     => 'ALL',
+        permission => '-',
+        position   => 'after',
     }
+
+    ensure_resources( 'pam_access::entry', $access_allow,
+        { 'permission' => '+',
+          'position'   => '-1',
+        }
+    )
+
+    ensure_resources( 'pam_access::entry', $access_deny,
+        { 'permission' => '-',
+          'position'   => 'after',
+        }
+    )
+
+    ensure_resources( 'pam_access::entry', $access_deny_before,
+        { 'permission' => '-',
+          'position'   => 'before',
+        }
+    )
+
+    ### Configure pam
+    ensure_resources( 'pam', $pam_config )
 
 }
 
