@@ -8,6 +8,7 @@ class lsst_system_authnz::kerberos (
   Hash               $cfg_file_settings, # cfg files and their contents
   String             $createhostkeytab,  # BASE64 ENCODING OF krb5 createhost keytab FILE
   String             $createhostuser,
+  String             $krb5_domain,
   Array[ String[1] ] $required_pkgs,     # DEFAULT SET VIA MODULE DATA
 ) {
 
@@ -57,10 +58,16 @@ class lsst_system_authnz::kerberos (
     }
 
     ## THIS MIGHT NEED TO BE SMARTER TO ALLOW FOR MULTIPLE HOSTNAMES ON ONE SERVER
+    #unless  => 'klist -kt /etc/krb5.keytab 2>&1 | grep "host/`hostname -f`@NCSA.EDU"',
+    $host_key_exists = join( 
+        [ 'klist -kt /etc/krb5.keytab 2>&1 ',
+          '| grep "host/$(hostname -f)', '@', $krb5_domain, '"',
+        ]
+    )
     exec { 'create_host_keytab':
         path    => [ '/usr/bin', '/usr/sbin'],
         command => "/root/createhostkeytab.sh ${createhostkeytab} ${createhostuser}",
-        unless  => 'klist -kt /etc/krb5.keytab 2>&1 | grep "host/`hostname -f`@NCSA.EDU"',
+        unless  => $host_key_exists,
         require => [
             File[ '/etc/krb5.conf' ],
             File[ '/etc/krb5.conf.d/kdc.conf' ],
