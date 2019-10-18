@@ -8,17 +8,66 @@ REQCLASS2=`date | base64 | tr -dc a-z | grep -o . | sort -R | tr -d "\n" | head 
 REQCLASS3=`date | tr -dc 0-9 | grep -o . | sort -R | tr -d "\n" | head -c2`
 REQCHARS=`echo $REQCLASS1$REQCLASS2$REQCLASS3`
 TEMPPASS=`echo "$RANDSTRING$REQCHARS" | grep -o . | sort -R | tr -d "\n"`
+FN_AUTH_KEYTAB=/root/auth.keytab
 
-#DEBUG
-#echo "($0) Keytab: $1, User: $2" > /root/createhost.txt
 
-# SAVE CREATEHOST KEYTAB TEMPORARILY
-echo "$1" | base64 --decode > /root/createhost.keytab
+###
+### WORK FUNCTIONS
+###
 
-# ADD HOST PRINCIPAL TO KRB DB USING CREATEHOST KEYTAB
-echo -e "$TEMPPASS\n$TEMPPASS" | kadmin -kt /root/createhost.keytab -p $2/createhost@NCSA.EDU -q "addprinc host/$(hostname -f)@NCSA.EDU"
-# ADD NEW HOST PRINCIPAL TO LOCAL KEYTAB FILE
-echo -e "$TEMPPASS" | kadmin -p host/$(hostname -f)@NCSA.EDU -q "ktadd host/$(hostname -f)@NCSA.EDU"
+mk_auth_keytab() {
+    # SAVE CREATEHOST KEYTAB TEMPORARILY
+    echo "$1" | base64 --decode > "$FN_AUTH_KEYTAB"
+}
 
-# CLEAN UP LOCAL TEMP FILES
-rm -f /root/createhost.keytab
+addprinc() {
+    # ADD HOST PRINCIPAL TO KRB DB USING CREATEHOST KEYTAB
+    local _domain="$1"
+    local _usr="$2"
+    local _user_princ="${_usr}/createhost@${_domain}"
+    local _host_princ="host/$(hostname -f)@${_domain}"
+    echo "Attempting addprinc ..."
+    echo -e "$TEMPPASS\n$TEMPPASS" \
+    | kadmin -kt "$FN_AUTH_KEYTAB" -p "$_user_princ" addprinc "${_host_princ}"
+    rc=$?
+    echo "  ... addprinc returned '$rc'"
+    return $rc
+}
+
+ktadd() {
+    # ADD NEW HOST PRINCIPAL TO LOCAL KEYTAB FILE
+    local _domain="$1"
+    local _host_princ="host/$(hostname -f)@${_domain}"
+    echo "Attempting ktadd ..."
+    echo -e "$TEMPPASS" | kadmin -p ${_host_princ} -q "ktadd ${_host_princ}"
+    rc=$?
+    echo "  ... ktadd returned '$?'"
+    return $rc
+}
+
+cleanup() {
+    # CLEAN UP LOCAL TEMP FILES
+    rm -f "$FN_AUTH_KEYTAB"
+}
+
+###
+### MAIN CODE LOGIC
+###
+
+if test "$#" -ne 3; then
+    echo "wrong arg count, expected 3, got '$#'" >&2
+    exit 1
+fi
+authorization_keytab=$1
+createhostuser=$2
+krb5_domain=$3
+
+mk_auth_keytab "$authorization_keytab"
+
+addprinc "$krb5_domain" "$createhostuser" \
+&& ktadd "$krb5_domain"
+rv=$?
+
+cleanup
+
+exit $rv

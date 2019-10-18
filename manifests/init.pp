@@ -8,23 +8,24 @@ class lsst_system_authnz {
 
     # ALL HOSTS GET THESE MODULES
     include ::lsst_system_authnz::access
-    #include ::lsst_system_authnz::sssd
+    include ::lsst_system_authnz::kerberos
+    include ::lsst_system_authnz::sssd
 
-    # MODULES DEPENDING ON CONTAINER/VIRTUAL TYPE
-    $additional_modules = [
-        '::lsst_system_authnz::kerberos',
-    ]
+#    # MODULES DEPENDING ON CONTAINER/VIRTUAL TYPE
+#    $additional_modules = [
+#        '::lsst_system_authnz::kerberos',
+#    ]
+#
+#    # Exclude additional modules based on virtual type
+#    $exclude_modules = $::virtual ? {
+##        'docker'     => [ '::lsst_system_authnz::kerberos' ],
+#        default      => [],
+#    }
+#    #include only relevant modules
+#    $selected_modules = $additional_modules - $exclude_modules
+#    include $selected_modules
 
-    # Exclude additional modules based on virtual type
-    $exclude_modules = $::virtual ? {
-#        'docker'     => [ '::lsst_system_authnz::kerberos' ],
-        default      => [],
-    }
-    #include only relevant modules
-    $selected_modules = $additional_modules - $exclude_modules
-    include $selected_modules
-
-    elsif ( $::virtual == 'virtualbox' ) {
+    if ( $::virtual == 'virtualbox' ) {
         # Retain vagrant access on virtualbox deployments
         # Assume virtualbox is only deployed on local systems, by vagrant, for testing
         # Production systems should never run in a virtualbox

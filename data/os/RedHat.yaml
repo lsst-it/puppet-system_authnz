@@ -8,14 +8,199 @@ lsst_system_authnz::kerberos::required_pkgs:
   - krb5-workstation
   - pam_krb5
 
-lsst_system_authnz::sssd::debug_level_domain: 0
-lsst_system_authnz::sssd::debug_level_nss: 0
-lsst_system_authnz::sssd::debug_level_pam: 0
-lsst_system_authnz::sssd::debug_level_sssd: 0
-lsst_system_authnz::sssd::enablemkhomedir: true
-lsst_system_authnz::sssd::enumerate: 'false'
-lsst_system_authnz::sssd::ldap_backup_uri: []
-lsst_system_authnz::sssd::ldap_tls_cacert: '/etc/pki/ca-trust/source/anchors/incommon-ca.pem'
-lsst_system_authnz::sssd::shell_fallback: '/bin/bash'
-lsst_system_authnz::sssd::timeout: 60
-
+#lsst_system_authnz::sssd::allowed_shells:
+#    - /bin/bash
+lsst_system_authnz::sssd::authconfig_pkgs:
+    - authconfig
+#lsst_system_authnz::sssd::debug_level_domain: 0
+#lsst_system_authnz::sssd::debug_level_nss: 0
+#lsst_system_authnz::sssd::debug_level_pam: 0
+#lsst_system_authnz::sssd::debug_level_sssd: 0
+#lsst_system_authnz::sssd::enablemkhomedir: true
+#lsst_system_authnz::sssd::enumerate: false
+#lsst_system_authnz::sssd::filter_groups:
+#    - adm
+#    - apache
+#    - asmadmin
+#    - asmdba
+#    - asmoper
+#    - audio
+#    - avahi
+#    - avahi-autoipd
+#    - backupdba
+#    - bin
+#    - cdrom
+#    - cgred
+#    - chronograf
+#    - chrony
+#    - condor
+#    - conserver
+#    - daemon
+#    - dba
+#    - dbus
+#    - dgdba
+#    - dhcpd
+#    - dialout
+#    - dip
+#    - disk
+#    - docker
+#    - elasticsearch
+#    - floppy
+#    - ftp
+#    - games
+#    - geoclue
+#    - git
+#    - gitlab-prometheus
+#    - gitlab-psql
+#    - gitlab-redis
+#    - gitlab-www
+#    - grafana
+#    - graylog
+#    - graylog-web
+#    - hsqldb
+#    - influxdb
+#    - input
+#    - kmdba
+#    - kmem
+#    - ldap
+#    - levelone
+#    - lock
+#    - lp
+#    - mail
+#    - man
+#    - mem
+#    - mongod
+#    - munge
+#    - myproxy
+#    - myproxyoauth
+#    - mysql
+#    - nagios
+#    - named
+#    - nfsnobody
+#    - nobody
+#    - nrpe
+#    - nscd
+#    - ntp
+#    - oinstall
+#    - oper
+#    - oprofile
+#    - pdagent
+#    - polkitd
+#    - postdrop
+#    - postfix
+#    - postgres
+#    - puppet
+#    - puppetdb
+#    - qserv
+#    - qualys
+#    - rabbitmq
+#    - racdba
+#    - redis
+#    - root
+#    - rpc
+#    - rpcuser
+#    - saslauth
+#    - screen
+#    - sfcb
+#    - simpleca
+#    - slocate
+#    - slurm
+#    - sshd
+#    - ssh_keys
+#    - sssd
+#    - stapdev
+#    - stapsys
+#    - stapusr
+#    - suiadmin
+#    - SupportAssistAdmins
+#    - SupportAssistUsers
+#    - sys
+#    - systemd-bus-proxy
+#    - systemd-journal
+#    - systemd-network
+#    - tape
+#    - tcpdump
+#    - telegraf
+#    - tss
+#    - tty
+#    - unbound
+#    - users
+#    - utempter
+#    - utmp
+#    - video
+#    - wheel
+#lsst_system_authnz::sssd::filter_users:
+#    - activemq
+#    - adm
+#    - apache
+#    - avahi
+#    - avahi-autoipd
+#    - bin
+#    - chronograf
+#    - chrony
+#    - condor
+#    - daemon
+#    - dbus
+#    - docker
+#    - elasticsearch
+#    - ftp
+#    - games
+#    - geoclue
+#    - grafana
+#    - graylog
+#    - graylog-web
+#    - grid
+#    - halt
+#    - hsqldb
+#    - influxdb
+#    - ldap
+#    - lp
+#    - mail
+#    - mongod
+#    - munge
+#    - myproxy
+#    - myproxyoauth
+#    - mysql
+#    - nagios
+#    - nfsnobody
+#    - nobody
+#    - nrpe
+#    - nscd
+#    - nslcd
+#    - ntp
+#    - operator
+#    - oprofile
+#    - oracle
+#    - pdagent
+#    - polkitd
+#    - postfix
+#    - rabbitmq
+#    - redis
+#    - rsbackup
+#    - qserv
+#    - qualys
+#    - root
+#    - rpc
+#    - rpcuser
+#    - saslauth
+#    - shutdown
+#    - simpleca
+#    - slurm
+#    - sshd
+#    - sssd
+#    - suiadmin
+#    - sync
+#    - systemd-bus-proxy
+#    - systemd-network
+#    - tcpdump
+#    - telegraf
+#    - tomcat
+#    - tss
+#    - unbound
+#    - wireshark
+#lsst_system_authnz::sssd::ldap_backup_uri: []
+#lsst_system_authnz::sssd::ldap_tls_cacert: /etc/pki/ca-trust/source/anchors/incommon-ca.pem
+#lsst_system_authnz::sssd::shell_fallback: /bin/bash
+#lsst_system_authnz::sssd::timeout: 60
+#lsst_system_authnz::sssd::vetoed_shells:
+#    - /bin/csh
