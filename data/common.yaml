@@ -1,33 +1,33 @@
 ---
 lookup_options:
-    lsst_system_authnz::access::access_allow:
+    system_authnz::access::access_allow:
         merge: hash
-    lsst_system_authnz::access::access_deny:
+    system_authnz::access::access_deny:
         merge: hash
-    lsst_system_authnz::access::access_deny_before:
+    system_authnz::access::access_deny_before:
         merge: hash
-    lsst_system_authnz::access::pam_config:
+    system_authnz::access::pam_config:
         merge: hash
-    lsst_system_authnz::kerberos::cfg_file_settings:
+    system_authnz::kerberos::cfg_file_settings:
         merge: hash
-    lsst_system_authnz::kerberos::createhostkeytab:
+    system_authnz::kerberos::createhostkeytab:
         convert_to: Sensitive
-#    lsst_system_authnz::sssd::allowed_shells:
+#    system_authnz::sssd::allowed_shells:
 #        merge: unique
-#    lsst_system_authnz::sssd::filter_groups:
+#    system_authnz::sssd::filter_groups:
 #        merge: unique
-#    lsst_system_authnz::sssd::filter_users:
+#    system_authnz::sssd::filter_users:
 #        merge: unique
-#    lsst_system_authnz::sssd::simple_allow_groups:
+#    system_authnz::sssd::simple_allow_groups:
 #        merge: unique
-#    lsst_system_authnz::sssd::simple_allow_users:
+#    system_authnz::sssd::simple_allow_users:
 #        merge: unique
-#    lsst_system_authnz::sssd::simple_deny_groups:
+#    system_authnz::sssd::simple_deny_groups:
 #        merge: unique
-#    lsst_system_authnz::sssd::vetoed_shells:
+#    system_authnz::sssd::vetoed_shells:
 #        merge: unique
 
-lsst_system_authnz::access::access_allow:
+system_authnz::access::access_allow:
     'Allow root from cron':
         user: root
         origin: cron
@@ -43,9 +43,9 @@ lsst_system_authnz::access::access_allow:
     'Allow root from tty':
         user: root
         origin: tty
-lsst_system_authnz::access::access_deny: {}
-lsst_system_authnz::access::access_deny_before: {}
-lsst_system_authnz::access::pam_config:
+system_authnz::access::access_deny: {}
+system_authnz::access::access_deny_before: {}
+system_authnz::access::pam_config:
     'Enforce access.conf in sshd':
         ensure: present
         service: sshd
@@ -55,7 +55,7 @@ lsst_system_authnz::access::pam_config:
         position: before module pam_nologin.so
 
 
-lsst_system_authnz::kerberos::cfg_file_settings:
+system_authnz::kerberos::cfg_file_settings:
     /etc/krb5.conf: |
         # This file is managed by Puppet.
         includedir /etc/krb5.conf.d/

@@ -3,8 +3,8 @@
 # @summary Configure security access.conf
 #
 # @example
-#   include lsst_system_authnz::access
-class lsst_system_authnz::access (
+#   include system_authnz::access
+class system_authnz::access (
     Array[ String[1] ] $required_pkgs,
     Hash $access_allow,
     Hash $access_deny,

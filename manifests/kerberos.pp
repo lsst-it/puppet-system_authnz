@@ -6,8 +6,8 @@
 #        the ability to manipulate config file (also using augeas)
 #
 # @example
-#   include lsst_system_authnz::kerberos
-class lsst_system_authnz::kerberos (
+#   include system_authnz::kerberos
+class system_authnz::kerberos (
   Hash               $cfg_file_settings, # cfg files and their contents
   Sensitive          $createhostkeytab,  # BASE64 ENCODING OF krb5 createhost keytab FILE
   String             $createhostuser,
@@ -47,17 +47,17 @@ class lsst_system_authnz::kerberos (
     file { '/root/createhostkeytab.sh':
         ensure => present,
         mode   => '0700',
-        source => 'puppet:///modules/lsst_system_authnz/root/createhostkeytab.sh',
+        source => 'puppet:///modules/system_authnz/root/createhostkeytab.sh',
     }
     file { '/root/deleteserviceprincipals.sh':
         ensure => present,
         mode   => '0700',
-        source => 'puppet:///modules/lsst_system_authnz/root/deleteserviceprincipals.sh',
+        source => 'puppet:///modules/system_authnz/root/deleteserviceprincipals.sh',
     }
     file { '/root/deletehostprincipal.sh':
         ensure => present,
         mode   => '0700',
-        source => 'puppet:///modules/lsst_system_authnz/root/deletehostprincipal.sh',
+        source => 'puppet:///modules/system_authnz/root/deletehostprincipal.sh',
     }
 
     ## THIS MIGHT NEED TO BE SMARTER TO ALLOW FOR MULTIPLE HOSTNAMES ON ONE SERVER

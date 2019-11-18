@@ -1,24 +1,24 @@
 ---
-lsst_system_authnz::access::required_pkgs:
+system_authnz::access::required_pkgs:
   - pam
   - pam_krb5
 
-lsst_system_authnz::kerberos::required_pkgs:
+system_authnz::kerberos::required_pkgs:
   - krb5-libs
   - krb5-workstation
   - pam_krb5
 
-#lsst_system_authnz::sssd::allowed_shells:
+#system_authnz::sssd::allowed_shells:
 #    - /bin/bash
-lsst_system_authnz::sssd::authconfig_pkgs:
+system_authnz::sssd::authconfig_pkgs:
     - authconfig
-#lsst_system_authnz::sssd::debug_level_domain: 0
-#lsst_system_authnz::sssd::debug_level_nss: 0
-#lsst_system_authnz::sssd::debug_level_pam: 0
-#lsst_system_authnz::sssd::debug_level_sssd: 0
-#lsst_system_authnz::sssd::enablemkhomedir: true
-#lsst_system_authnz::sssd::enumerate: false
-#lsst_system_authnz::sssd::filter_groups:
+#system_authnz::sssd::debug_level_domain: 0
+#system_authnz::sssd::debug_level_nss: 0
+#system_authnz::sssd::debug_level_pam: 0
+#system_authnz::sssd::debug_level_sssd: 0
+#system_authnz::sssd::enablemkhomedir: true
+#system_authnz::sssd::enumerate: false
+#system_authnz::sssd::filter_groups:
 #    - adm
 #    - apache
 #    - asmadmin
@@ -129,7 +129,7 @@ lsst_system_authnz::sssd::authconfig_pkgs:
 #    - utmp
 #    - video
 #    - wheel
-#lsst_system_authnz::sssd::filter_users:
+#system_authnz::sssd::filter_users:
 #    - activemq
 #    - adm
 #    - apache
@@ -198,9 +198,9 @@ lsst_system_authnz::sssd::authconfig_pkgs:
 #    - tss
 #    - unbound
 #    - wireshark
-#lsst_system_authnz::sssd::ldap_backup_uri: []
-#lsst_system_authnz::sssd::ldap_tls_cacert: /etc/pki/ca-trust/source/anchors/incommon-ca.pem
-#lsst_system_authnz::sssd::shell_fallback: /bin/bash
-#lsst_system_authnz::sssd::timeout: 60
-#lsst_system_authnz::sssd::vetoed_shells:
+#system_authnz::sssd::ldap_backup_uri: []
+#system_authnz::sssd::ldap_tls_cacert: /etc/pki/ca-trust/source/anchors/incommon-ca.pem
+#system_authnz::sssd::shell_fallback: /bin/bash
+#system_authnz::sssd::timeout: 60
+#system_authnz::sssd::vetoed_shells:
 #    - /bin/csh

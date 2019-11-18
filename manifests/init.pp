@@ -3,22 +3,22 @@
 # @summary Install and configure the the system authnz using LSST IdM
 #
 # @example
-#   include lsst_system_authnz
-class lsst_system_authnz {
+#   include system_authnz
+class system_authnz {
 
     # ALL HOSTS GET THESE MODULES
-    include ::lsst_system_authnz::access
-    include ::lsst_system_authnz::kerberos
-    include ::lsst_system_authnz::sssd
+    include ::system_authnz::access
+    include ::system_authnz::kerberos
+    include ::system_authnz::sssd
 
 #    # MODULES DEPENDING ON CONTAINER/VIRTUAL TYPE
 #    $additional_modules = [
-#        '::lsst_system_authnz::kerberos',
+#        '::system_authnz::kerberos',
 #    ]
 #
 #    # Exclude additional modules based on virtual type
 #    $exclude_modules = $::virtual ? {
-##        'docker'     => [ '::lsst_system_authnz::kerberos' ],
+##        'docker'     => [ '::system_authnz::kerberos' ],
 #        default      => [],
 #    }
 #    #include only relevant modules

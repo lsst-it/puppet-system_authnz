@@ -4,8 +4,8 @@
 # Requires bodgit/sssd.
 #
 # @example
-#   include lsst_system_authnz::sssd
-class lsst_system_authnz::sssd (
+#   include system_authnz::sssd
+class system_authnz::sssd (
     # PARAMETERS: general
     Boolean       $enablemkhomedir,
     Array[String] $authconfig_pkgs,
@@ -16,7 +16,7 @@ class lsst_system_authnz::sssd (
     # TODO - make this a paramter, then use a hiera interpolation lookup in hiera
     $cacert = '/etc/pki/ca-trust/source/anchors/incommon-ca.pem'
     file { $cacert :
-        source => "puppet:///modules/lsst_system_authnz${cacert}",
+        source => "puppet:///modules/system_authnz${cacert}",
         mode   => '0444',
         before => Service['sssd'],
     }
@@ -39,7 +39,7 @@ class lsst_system_authnz::sssd (
     }
 
     # ENSURE SSSD SERVICE IS RESTARTED IF/WHEN ANY KRB5 CFG FILES CHANGE
-#    $krb_cfgfile_data = lookup( 'lsst_system_authnz::kerberos::cfg_file_settings',
+#    $krb_cfgfile_data = lookup( 'system_authnz::kerberos::cfg_file_settings',
 #                                Hash,
 #                                'hash' )
 #    # setup a "notify" relationship from filename to service
