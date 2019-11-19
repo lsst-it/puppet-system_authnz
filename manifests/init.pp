@@ -26,12 +26,6 @@ class system_authnz {
 #    include $selected_modules
 
     if ( $::virtual == 'virtualbox' ) {
-        # Retain vagrant access on virtualbox deployments
-        # Assume virtualbox is only deployed on local systems, by vagrant, for testing
-        # Production systems should never run in a virtualbox
-        sudo::conf { 'vagrant':
-            priority => 10,
-            content  => '%vagrant ALL=(ALL) NOPASSWD: ALL',
-        }
+        include ::system_authnz::vagrant
     }
 }
