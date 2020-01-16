@@ -12,20 +12,6 @@ lookup_options:
         merge: hash
     system_authnz::kerberos::createhostkeytab:
         convert_to: Sensitive
-#    system_authnz::sssd::allowed_shells:
-#        merge: unique
-#    system_authnz::sssd::filter_groups:
-#        merge: unique
-#    system_authnz::sssd::filter_users:
-#        merge: unique
-#    system_authnz::sssd::simple_allow_groups:
-#        merge: unique
-#    system_authnz::sssd::simple_allow_users:
-#        merge: unique
-#    system_authnz::sssd::simple_deny_groups:
-#        merge: unique
-#    system_authnz::sssd::vetoed_shells:
-#        merge: unique
 
 system_authnz::access::access_allow:
     'Allow root from cron':

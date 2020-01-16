@@ -27,7 +27,6 @@ The `system_authnz` module affects the following services on a given server:
 
   * kerberos configuration & host keytab
   * SSSD configuration
-  * sshd configuration
   * PAM security access.conf configuration
   * sudoers configuration
 
@@ -106,12 +105,6 @@ The following parameters let you extend system_authnz options beyond the default
   * `system_authnz::access::pam_config` - Hash of pam configuration
   * `system_authnz::kerberos::cfg_file_settings` - Hash of kerberos file settings
   * `system_authnz::kerberos::required_pkgs` - Array of packages needed for kerberos configuration
-  * `system_authnz::sshd::allowed_subnets` - Array of allowed subnets for default sshd configuration
-  * `system_authnz::sshd::config` - Hash of default sshd configuration settingsa
-  * `system_authnz::sshd::config_matches` - Hash of sshd config matches
-  * `system_authnz::sshd::required_packages` - Array of packages needed for sshd configuration
-  * `system_authnz::sshd::revoked_keys` - Array of public ssh keys that are revoked by sshd
-  * `system_authnz::sshd::revoked_keys_file` - String of full path to file containing revoked ssh keys
   * `system_authnz::sssd::allowed_shells` - Array of shell binaries with full path
   * `system_authnz::sssd::debug_level_domain` - Integer of debug level for domain in SSSD
   * `system_authnz::sssd::debug_level_nss` - Integer of debug level for nss in SSSD
